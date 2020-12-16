@@ -1,5 +1,3 @@
-const { fstat } = require("fs");
-
 module.exports = {
     name: "generate",
     description: "Generates an alt",
@@ -23,7 +21,7 @@ module.exports = {
             if (settings.info == true) {
                 log(
                     primary(
-                        `\naccount generated (token copied to clipboard)\nign: ${res.username}\nskin: ${skin}`
+                        `\naccount generated\nign: ${res.username}\nskin: ${skin}`
                     )
                 );
                 if (res.info) {
@@ -48,12 +46,12 @@ module.exports = {
                             : ""
                     )
                 );
+                debugMsg("this was called");
                 addAccount(res.token, res.username);
             }
         })();
-
         function addAccount(token, ign) {
-            log("// TODO: Account history");
+            return log("// TODO: add to account history");
         }
     },
 };

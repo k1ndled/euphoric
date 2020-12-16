@@ -8,11 +8,15 @@ global.taClient = require("thealtening-js");
 global.Hypixel = require("hypixel-api-reborn");
 global.chalk = require("chalk");
 global.clipboardy = require("clipboardy");
+
+// files
 global.package = require("../package.json");
+global.utils = require("./utils.js");
 
 // aliases
 global.log = console.log;
 global.primary = chalk.hex("#63e060");
+global.debugMsg = utils.debugMsg;
 
 // setup
 global.rl = readline.createInterface({
@@ -100,7 +104,7 @@ function ask(type) {
 
 // setup command handler
 
-let commandsCollection = new global.Map();
+global.commandsCollection = new Map();
 const commands = fs
     .readdirSync(path.join(__dirname, "modules"))
     .filter(r => r.endsWith(".js"));
