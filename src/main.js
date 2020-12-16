@@ -27,11 +27,11 @@ global.rl = readline.createInterface({
 
 // welcome message
 console.clear();
-log(chalk.hex("#63e060")(`Welcome ${os.hostname()}, to TheAltening CLI`));
+log(chalk.hex("#63e060")(`Welcome ${os.hostname()}, to Euphoric CLI`));
 process.stdout.write(
     String.fromCharCode(27) +
         "]0;" +
-        `TheAltening CLI | v${package.version}` +
+        `Euphoric CLI | v${package.version}` +
         String.fromCharCode(7)
 );
 
@@ -102,6 +102,10 @@ function ask(type) {
     }
 }
 
+// now we can run the DiscordRPC
+
+require("./discordRPC").start();
+
 // setup command handler
 
 global.commandsCollection = new Map();
@@ -124,12 +128,6 @@ function execute() {
         }
         if (!commandsCollection.get(cmd.toLowerCase())) {
             log("unknown command :: type 'help' for help");
-            return execute();
-        }
-        if (cmd.toLowerCase() == "help") {
-            commandsCollection
-                .get(cmd.toLowerCase())
-                .execute(commandsCollection, args);
             return execute();
         }
         commandsCollection.get(cmd.toLowerCase()).execute(args);

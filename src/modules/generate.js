@@ -18,6 +18,13 @@ module.exports = {
             if (conf.get("copyToken") == true) {
                 clipboardy.writeSync(res.token);
             }
+            if (res.limit == true) {
+                log(
+                    chalk.hex("#fcc221")(
+                        "(api limit reached :: you will no longer get unique accounts until the timer is reset)"
+                    )
+                );
+            }
             if (settings.info == true) {
                 log(
                     primary(

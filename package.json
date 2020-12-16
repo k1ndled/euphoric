@@ -1,39 +1,40 @@
 {
-	"name": "thealteningcli",
-	"version": "1.0.0",
-	"description": "A CLI for TheAltening",
-	"main": "./src/main.js",
-	"bin": "./src/main.js",
-	"scripts": {
-		"test": "node ."
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/k1ndled/thealtening.git"
-	},
-	"pkg": {
-		"assets": [
-			"src/*"
-		]
-	},
-	"keywords": [
-		"minecraft",
-		"cli",
-		"thealtening cli",
-		"thealtening",
-		"minecaft accounts",
-		"mc",
-		"mc account generator"
-	],
-	"author": "k1ndled",
-	"license": "Apache-2.0",
-	"bugs": {
-		"url": "https://github.com/k1ndled/thealtening/issues"
-	},
-	"homepage": "https://github.com/k1ndled/thealtening#readme",
-	"dependencies": {
-		"clipboardy": "^2.3.0",
-		"hypixel-api-reborn": "^3.1.2",
-		"thealtening-js": "^1.1.0"
-	}
+    "name": "euphoriccli",
+    "version": "1.0.0",
+    "description": "A CLI for TheAltening",
+    "main": "./src/main.js",
+    "bin": "./src/main.js",
+    "scripts": {
+        "test": "node ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/k1ndled/euphoric.git"
+    },
+    "pkg": {
+        "assets": [
+            "src/*"
+        ]
+    },
+    "keywords": [
+        "minecraft",
+        "cli",
+        "thealtening cli",
+        "thealtening",
+        "minecaft accounts",
+        "mc",
+        "mc account generator"
+    ],
+    "author": "kindled",
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/k1ndled/euphoric/issues"
+    },
+    "homepage": "https://github.com/k1ndled/euphoric#readme",
+    "dependencies": {
+        "clipboardy": "^2.3.0",
+        "discord-rich-presence": "0.0.8",
+        "hypixel-api-reborn": "^3.1.2",
+        "thealtening-js": "^1.1.0"
+    }
 }
