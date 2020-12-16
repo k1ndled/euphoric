@@ -32,6 +32,7 @@
 	},
 	"homepage": "https://github.com/k1ndled/thealtening#readme",
 	"dependencies": {
+		"clipboardy": "^2.3.0",
 		"hypixel-api-reborn": "^3.1.2",
 		"thealtening-js": "^1.1.0"
 	}
