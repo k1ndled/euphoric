@@ -4,7 +4,7 @@ module.exports = {
     execute(args) {
         log(
             primary(
-                "Hey! This is a command line interface for TheAltening API. Here is all the commands you can use so far."
+                "Hey! This is a command line interface for TheAltening API, made by kindled. Here is all the commands you can use so far."
             )
         );
         commandsCollection.forEach(r => {

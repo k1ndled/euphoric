@@ -1,5 +1,3 @@
-const prettyMilliseconds = require("pretty-ms");
-
 module.exports = {
     getUsername(token) {
         log(
@@ -17,5 +15,26 @@ module.exports = {
     },
     debugMsg(msg) {
         log(chalk.hex("#ebd742")("[DEBUG] - ") + msg);
+    },
+
+    // MAKE THIS WORK
+
+    async ignToUUID(ign) {
+        const res = await fetch(
+            `https://api.mojang.com/users/profiles/minecraft/${ign}`
+        );
+        return res.json();
+    },
+
+    async checkMineconCape(uuid) {
+        const res = await fetch(`https://crafatar.com/capes/${uuid}`);
+        if (res.status == 404) {
+            return { success: "false", error: "No Mincon cape" };
+        } else if (res.status == 304) {
+            return {
+                success: "true",
+                cape: `https://crafatar.com/capes/${uuid}`,
+            };
+        }
     },
 };

@@ -3,6 +3,7 @@ global.path = require("path");
 global.fs = require("fs");
 global.os = require("os");
 global.readline = require("readline");
+global.fetch = require("node-fetch");
 global.conf = require("nconf");
 global.taClient = require("thealtening-js");
 global.Hypixel = require("hypixel-api-reborn");

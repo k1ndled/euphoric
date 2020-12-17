@@ -1,9 +1,17 @@
+const utils = require("../utils");
+
 module.exports = {
     name: "info",
     description: "Shows information about an alt",
     usage: "<alt-token / username>",
     execute(args) {
         let ign;
+        let uuid;
+        if (!args[0]) {
+            return log(
+                chalk.hex("#ed0707")(`usage: ${this.name} ${this.usage}`)
+            );
+        }
         if (args[0].includes("@")) {
             (async () => {
                 //ign = utils.getUsername("cnppi-6oy0w@alt.com");
@@ -12,6 +20,9 @@ module.exports = {
         } else if (args[0]) {
             ign = args[0];
         }
+        utils.ignToUUID(ign).then(id => {
+            uuid = id.id;
+        });
         hypixel
             .getPlayer(ign)
             .then(player => {
@@ -28,7 +39,6 @@ module.exports = {
                 // general hypixel stats
 
                 log(primary(`\n[${player.rank}] ${player.nickname}`));
-                log(primary(`uuid:: ${player.uuid}`));
                 log(primary(`name changes:: ${nameChanges}`));
                 log(primary(`network level:: ${player.level}`));
                 log(primary(`is online:: ${player.isOnline ? "yes" : "no"}`));
@@ -64,17 +74,47 @@ module.exports = {
                 log(primary(`bw winstreak:: ${bwWinstreak}`));
                 log(primary(`bw kils:: ${bw.kills.toLocaleString()}`));
                 log(primary(`bw finals:: ${bw.finalKills.toLocaleString()}`));
-                log(primary(`broke ${bw.beds.broken.toLocaleString()} beds`));
+                log(primary(`broke ${bw.beds.broken.toLocaleString()} beds\n`));
 
                 // duels stats
                 log(primary(`duels coins:: ${duels.coins.toLocaleString()}`));
                 log(primary(`duels kills:: ${duels.kills.toLocaleString()}`));
-                log(primary(`duels wins:: ${duels.wins.toLocaleString()}`));
+                log(primary(`duels wins:: ${duels.wins.toLocaleString()}\n`));
 
-                // ADD SKYBLOCK COINS
-                // REFERENCE => https://cdn.chatter.host/skbylockAPI.png
-                // CONVERT IGN TO UUID IN ORDER TO USE
-                // API LINK => https://api.hypixel.net/Skyblock/profiles?key=<API-KEY>&uuid=<UUID>
+                fetch(
+                    `https://api.hypixel.net/Skyblock/profiles?key=${conf.get(
+                        "hypixel-api-key"
+                    )}&uuid=${uuid}`
+                )
+                    .then(res => res.json())
+                    .then(json => {
+                        if (json.success == true) {
+                            log(primary(`skyblock coins::`));
+                            json.profiles.forEach(profile => {
+                                if (profile.banking) {
+                                    log(
+                                        primary(
+                                            `[${
+                                                profile.cute_name
+                                            }] ${profile.banking.balance.toLocaleString()} coins in the bank, with ${profile.members[
+                                                uuid
+                                            ].coin_purse.toLocaleString()} coins in their purse`
+                                        )
+                                    );
+                                }
+                            });
+                        } else {
+                            log(
+                                chalk.hex("#ed0707")(
+                                    `there was an error fetching skyblock coins`
+                                )
+                            );
+                            return;
+                        }
+                    })
+                    .catch(error => {
+                        log(chalk.hex("#ed0707")(``));
+                    });
             })
             .catch(e => {
                 console.log(e);
