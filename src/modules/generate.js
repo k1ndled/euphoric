@@ -53,7 +53,6 @@ module.exports = {
                             : ""
                     )
                 );
-                debugMsg("this was called");
                 addAccount(res.token, res.username);
             }
         })();

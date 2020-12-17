@@ -1,6 +1,6 @@
 module.exports = {
     name: "private",
-    description: "Privates an alt",
+    description: "Private / unprivate an alt",
     usage: "<alt-token>",
     execute(args) {
         (async () => {

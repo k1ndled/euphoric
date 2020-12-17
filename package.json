@@ -35,6 +35,8 @@
         "clipboardy": "^2.3.0",
         "discord-rich-presence": "0.0.8",
         "hypixel-api-reborn": "^3.1.2",
-        "thealtening-js": "^1.1.0"
+        "mineflayer": "^2.37.1",
+        "thealtening-js": "^1.1.0",
+        "yggdrasil": "git+https://github.com/k1ndled/yggdrasil-thealtening.git"
     }
 }

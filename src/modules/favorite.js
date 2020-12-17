@@ -1,6 +1,6 @@
 module.exports = {
     name: "favorite",
-    description: "Favorite an alt",
+    description: "Favorite / unfavorite an alt",
     usage: "<alt-token>",
     execute(args) {
         (async () => {

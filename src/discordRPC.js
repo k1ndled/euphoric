@@ -28,7 +28,7 @@ module.exports = {
         if (isRPCStarted == true) {
             rpcClient.updatePresence({
                 state: text,
-                largeImageKey: "logo",
+                largeImageKey: "ici1kki",
                 largeImageText: "The best TheAltening CLI",
                 smallImageKey: "pfp",
                 smallImageText: "Developed by kindled",
