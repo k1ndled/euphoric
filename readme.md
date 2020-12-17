@@ -20,5 +20,5 @@ $ info <IGN/TOKEN>
 $ help
 ```
 
-In order to use Euphoric to it's best potential buy TheAltening [Premium](https://panel.thealtening.com/#prices)
-Euphoric will work with a basic plan too, you will just loose some features.
+In order to use Euphoric to it's best potential buy TheAltening [Premium](https://panel.thealtening.com/#prices)\
+Euphoric will work with a basic plan too, you will just loose some features.\
