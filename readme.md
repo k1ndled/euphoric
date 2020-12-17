@@ -24,7 +24,7 @@ $ generate [info=true]
 ##### Get more in depth info (Hypixel rank, levels, Skyblock coins, etc)
 
 ```sh
-$ info <IGN/TOKEN>
+$ info <IGN/TOKEN> [hypixel=true / all=true]
 ```
 
 ##### View more commands with
