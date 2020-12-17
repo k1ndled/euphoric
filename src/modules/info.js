@@ -187,17 +187,11 @@ module.exports = {
                     fetch(
                         `https://api.hypixel.net/Skyblock/profiles?key=${conf.get(
                             "hypixel-api-key"
-                        )}&uuid=${uuid}`
+                        )}&uuid=${player.uuid}`
                     )
                         .then(res => res.json())
                         .then(json => {
                             if (json.success == true) {
-                                log(json);
-                                log(
-                                    `https://api.hypixel.net/Skyblock/profiles?key=${conf.get(
-                                        "hypixel-api-key"
-                                    )}&uuid=${uuid}`
-                                );
                                 if (json.profiles) {
                                     log(primary(`skyblock coins::`));
                                     json.profiles.forEach(profile => {
@@ -207,7 +201,7 @@ module.exports = {
                                                     `[${
                                                         profile.cute_name
                                                     }] ${profile.banking.balance.toLocaleString()} coins in the bank, with ${profile.members[
-                                                        uuid
+                                                        player.uuid
                                                     ].coin_purse.toLocaleString()} coins in their purse`
                                                 )
                                             );
