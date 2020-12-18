@@ -25,6 +25,9 @@ const isRunning = (query, cb) => {
 
 module.exports = {
     updatePresence(text) {
+        if (conf.get("discord-rpc") == false) {
+            return;
+        }
         if (isRPCStarted == true) {
             rpcClient.updatePresence({
                 state: text,

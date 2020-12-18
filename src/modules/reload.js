@@ -3,7 +3,11 @@ module.exports = {
     description: "Reloads a command",
     usage: "<command>",
     execute(args) {
-        if (!args.length) return log(`Usage: reload <command>`);
+        if (!args[0]) {
+            return log(
+                chalk.hex("#ed0707")(`usage: ${this.name} ${this.usage}`)
+            );
+        }
         var commandName = args[0].toLowerCase();
         if (!args[1]) {
             var command;

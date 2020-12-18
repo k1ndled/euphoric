@@ -50,7 +50,7 @@ module.exports = {
                     primary(
                         conf.get("copyToken")
                             ? "(token copied to clipboard)"
-                            : ""
+                            : `\ntoken: ${res.token}`
                     )
                 );
                 addAccount(res.token, res.username);

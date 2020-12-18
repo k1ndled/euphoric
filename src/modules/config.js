@@ -1,3 +1,5 @@
+const discordRPC = require("../discordRPC");
+
 module.exports = {
     name: "config",
     description: "Set configuration values",
@@ -35,10 +37,31 @@ module.exports = {
                     break;
                 }
                 break;
+            case "discord-rpc":
+            case "rpc":
+                if (conf.get("discord-rpc") == true) {
+                    conf.set("discord-rpc", false);
+                    conf.save();
+                    log(primary("Disabled discord-rpc (reboot)"));
+                    break;
+                } else if (conf.get("discord-rpc") == false) {
+                    conf.set("discord-rpc", true);
+                    conf.save();
+                    log(primary("Enabled discord-rpc"));
+                    discordRPC.start();
+                    break;
+                } else if (!conf.get("discord-rpc")) {
+                    conf.set("discord-rpc", true);
+                    conf.save();
+                    log(primary("Enabled discord-rpc"));
+                    discordRPC.start();
+                    break;
+                }
+                break;
             default:
                 log(
                     primary(
-                        "Avalible configuration options: hypixel-key, thealtening-key, copy-token"
+                        "Avalible configuration options: hypixel-key, thealtening-key, copy-token, discord-rpc"
                     )
                 );
                 break;

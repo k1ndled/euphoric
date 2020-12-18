@@ -5,6 +5,11 @@ module.exports = {
     description: "Shows information about an alt",
     usage: "<alt-token / username> [hypixel=true]",
     execute(args) {
+        if (!args[0]) {
+            return log(
+                chalk.hex("#ed0707")(`usage: ${this.name} ${this.usage}`)
+            );
+        }
         let ign;
         // uuid
         let uuid;
