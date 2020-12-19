@@ -15,7 +15,7 @@ After that is done you will be asked to provide your TheAltening API Key, you ca
 
 ## Help
 
-##### **[P]** Generate accounts with
+##### **[Premium command]** Generate accounts with
 
 ```sh
 $ generate [info=true]
@@ -27,13 +27,13 @@ $ generate [info=true]
 $ info <IGN/TOKEN> [hypixel=true / all=true]
 ```
 
-##### **[P]** Favorite an account
+##### **[Premium command]** Favorite an account
 
 ```sh
 $ favorite <token>
 ```
 
-##### **[P]** Private an account
+##### **[Premium command]** Private an account
 
 ```sh
 $ private <token>
@@ -45,6 +45,9 @@ $ private <token>
 $ help
 ```
 
-In order to use Euphoric to it's best potential buy TheAltening [Premium](https://panel.thealtening.com/#prices)\
-Commands that need premium are listed with **[P]** within this readme
+## FAQ
+
+soon
+
+In order to use Euphoric to it's best potential buy TheAltening [Premium](https://panel.thealtening.com/#prices). TheAltening also offers a 1 day Premium trial for \$0.50 if you would like to see if Euphoric & TheAltening is right for you. \
 Euphoric will work with a basic plan too, you will just loose some features.
