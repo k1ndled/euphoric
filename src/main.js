@@ -108,6 +108,8 @@ function ask(type) {
     if (type == "hypixel-api-key") {
         rl.question("Enter a Hypixel API Key => ", (r) => {
             conf.set("hypixel-api-key", r);
+            // auto-set copyToken
+            conf.set("copyToken", true);
             conf.save();
             console.clear();
             log(primary("Successfully set your Hypixel API Key"));
@@ -123,12 +125,25 @@ require("./discordRPC").start();
 // setup command handler
 
 global.commandsCollection = new Map();
+global.aliasesCollection = new Map();
+
+let counter = {};
+counter.commands = 0;
+counter.aliases = 0;
+
 const commands = fs
     .readdirSync(path.join(__dirname, "modules"))
     .filter((r) => r.endsWith(".js"));
 for (const command of commands) {
     const x = require(path.join(__dirname, "modules", command));
     commandsCollection.set(x.name, x);
+    counter.commands = counter.commands + 1;
+    if (x.aliases) {
+        x.aliases.forEach((alias) => {
+            aliasesCollection.set(alias, x);
+            counter.aliases = counter.aliases + 1;
+        });
+    }
 }
 
 // this handles all the command execution
@@ -140,11 +155,23 @@ function execute() {
         if (!cmd) {
             return execute();
         }
-        if (!commandsCollection.get(cmd.toLowerCase())) {
+        if (
+            !commandsCollection.get(cmd.toLowerCase()) &&
+            !aliasesCollection.get(cmd.toLowerCase())
+        ) {
             log("unknown command :: type 'help' for help");
             return execute();
         }
-        commandsCollection.get(cmd.toLowerCase()).execute(args);
+        if (aliasesCollection.get(cmd.toLowerCase())) {
+            try {
+                aliasesCollection.get(cmd).execute(args);
+                return execute();
+            } catch (e) {
+                return execute();
+            }
+        } else if (commandsCollection.get(cmd.toLowerCase())) {
+            commandsCollection.get(cmd.toLowerCase()).execute(args);
+        }
         return execute();
     });
 }

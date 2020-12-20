@@ -2,6 +2,7 @@ module.exports = {
     name: "favorite",
     description: "Favorite / unfavorite an alt",
     usage: "<alt-token>",
+    aliases: ["fav", "favourite"],
     execute(args) {
         if (!args[0]) {
             return log(
@@ -10,9 +11,12 @@ module.exports = {
         }
         (async () => {
             const res = await ta.favorite(args[0]);
-            const alt = await ta.altInfo(args[0]);
             if (res.success == true) {
-                log(primary(`Successfully favorited ${alt.username}`));
+                utils.getAccount(res.token).then((acc) => {
+                    if (acc.success == true) {
+                        log(primary(`successfully favorited ${acc.username}`));
+                    }
+                });
             }
         })();
     },

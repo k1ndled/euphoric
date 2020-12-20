@@ -2,6 +2,7 @@ module.exports = {
     name: "reload",
     description: "Reloads a command",
     usage: "<command>",
+    aliases: ["rl"],
     execute(args) {
         if (!args[0]) {
             return log(

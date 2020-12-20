@@ -4,6 +4,7 @@ module.exports = {
     name: "config",
     description: "Set configuration values",
     usage: "[key]",
+    aliases: ["settings", "configuration"],
     execute(args) {
         switch (args[0]) {
             case "hypixel-key":

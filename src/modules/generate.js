@@ -2,7 +2,10 @@ module.exports = {
     name: "generate",
     description: "Generates an alt",
     usage: "[hypixel=true / info=true]",
+    aliases: ["gen"],
     execute(args) {
+        let started = Date.now();
+        log(primary("generating account..."));
         let settings = {};
         args.forEach((arg) => {
             if (arg == "hypixel=true") {
@@ -30,7 +33,9 @@ module.exports = {
                     if (acc.success == true) {
                         log(
                             primary(
-                                `\naccount generated\nign: ${acc.username}\nskin: ${skin}`
+                                `\naccount generated in ${
+                                    Date.now() - started
+                                }ms\nign: ${acc.username}\nskin: ${skin}`
                             )
                         );
                         addAccount(res.token, res.username);
@@ -53,7 +58,9 @@ module.exports = {
                     if (acc.success == true) {
                         log(
                             primary(
-                                `\naccount generated \nign: ${acc.username}`
+                                `\naccount generated in ${
+                                    Date.now() - started
+                                }ms \nign: ${acc.username}`
                             )
                         );
                         log(

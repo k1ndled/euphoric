@@ -1,5 +1,5 @@
 {
-    "name": "euphoriccli",
+    "name": "euphoric",
     "version": "1.0.0",
     "description": "A CLI for TheAltening",
     "main": "./src/main.js",
