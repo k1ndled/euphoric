@@ -32,12 +32,14 @@
     },
     "homepage": "https://github.com/k1ndled/euphoric#readme",
     "dependencies": {
+        "chalk": "^4.1.0",
         "clipboardy": "^2.3.0",
         "discord-rich-presence": "0.0.8",
         "hypixel-api-reborn": "^3.1.2",
         "mineflayer": "^2.37.1",
+        "nconf": "^0.11.0",
         "node-fetch": "^2.6.1",
         "thealtening-js": "^1.1.0",
-        "yggdrasil": "git+https://github.com/k1ndled/yggdrasil-thealtening.git"
+        "yggdrasil": "^1.4.0"
     }
 }

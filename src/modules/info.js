@@ -13,14 +13,18 @@ module.exports = {
         let ign;
         // uuid
         let uuid;
-        utils.ignToUUID(ign).then(id => {
+        utils.ignToUUID(ign).then((id) => {
             uuid = id.id;
         });
         let settings = {};
         // if there's a token in the args, get ign from token
         if (args[0]) {
             if (args[0].includes("@")) {
-                return log(primary(`// TODO: Convert token to IGN`));
+                utils.getAccount(args[0]).then((acc) => {
+                    if (acc.success == true) {
+                        ign = acc.username;
+                    }
+                });
             } else {
                 ign = args[0];
             }
@@ -30,7 +34,7 @@ module.exports = {
             );
         }
         // settings init
-        args.forEach(arg => {
+        args.forEach((arg) => {
             if (arg == "hypixel=true") {
                 settings.hypixel = true;
             }
@@ -56,29 +60,29 @@ module.exports = {
 
         function printGeneral(singular) {
             log(primary(`\ngeneral info | ${ign}\n`));
-            utils.ignToUUID(ign).then(id => {
+            utils.ignToUUID(ign).then((id) => {
                 log(primary(`uuid:: ${id.id}`));
                 let nameChanges = 0;
                 let names = [];
                 fetch(`https://api.mojang.com/user/profiles/${id.id}/names`)
-                    .then(res => res.json())
-                    .then(json => {
-                        json.forEach(acc => {
+                    .then((res) => res.json())
+                    .then((json) => {
+                        json.forEach((acc) => {
                             nameChanges++;
                             names.push(acc.name);
                         });
                         log(primary(`name changes:: ${nameChanges}`));
                         fetch(`http://s.optifine.net/capes/${ign}.png`)
-                            .then(res => {
+                            .then((res) => {
                                 return res.text();
                             })
-                            .then(body => {
+                            .then((body) => {
                                 if (body && body.includes("Not found")) {
                                     log(primary("optifine cape:: no"));
                                 } else {
                                     log(primary("optifine cape:: yes"));
                                 }
-                                utils.checkMineconCape(id.id).then(r => {
+                                utils.checkMineconCape(id.id).then((r) => {
                                     if (r.success == true) {
                                         log(primary("minecon cape:: yes"));
                                     } else if (r.error == "No Mincon cape") {
@@ -104,9 +108,10 @@ module.exports = {
         }
 
         function printHypixelStats() {
+            if (!ign) return log(`${ign} no ign was set for some reason..`);
             hypixel
                 .getPlayer(ign)
-                .then(player => {
+                .then((player) => {
                     let swWinstreak;
                     let bwWinstreak;
                     let sw = player.stats.skywars;
@@ -194,12 +199,12 @@ module.exports = {
                             "hypixel-api-key"
                         )}&uuid=${player.uuid}`
                     )
-                        .then(res => res.json())
-                        .then(json => {
+                        .then((res) => res.json())
+                        .then((json) => {
                             if (json.success == true) {
                                 if (json.profiles) {
                                     log(primary(`skyblock coins::`));
-                                    json.profiles.forEach(profile => {
+                                    json.profiles.forEach((profile) => {
                                         if (profile.banking) {
                                             log(
                                                 primary(
@@ -222,11 +227,11 @@ module.exports = {
                                 return;
                             }
                         })
-                        .catch(error => {
+                        .catch((error) => {
                             log(chalk.hex("#ed0707")(`error:\n${error}`));
                         });
                 })
-                .catch(e => {
+                .catch((e) => {
                     log(e);
                 });
         }

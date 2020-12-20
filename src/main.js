@@ -38,9 +38,7 @@ process.stdout.write(
 
 // check / set config
 
-if (!fs.existsSync("./config/config.json")) {
-    ask("setup");
-} else {
+function start() {
     conf.file({ file: path.join(__dirname, "../", "config", "config.json") }); // Set configuration file in Nconf
     if (conf.get("ta-api-key")) {
         global.ta = new taClient(conf.get("ta-api-key"));
@@ -59,14 +57,29 @@ if (!fs.existsSync("./config/config.json")) {
     }
 }
 
+if (!fs.existsSync("./config/config.json")) {
+    ask("setup");
+} else {
+    start();
+}
+
 // ask for setup questions
 
 function ask(type) {
     if (type == "setup") {
         rl.question(
             "It appears you have not used this application before. Would you like to start the setup? (y/n) => ",
-            r => {
+            (r) => {
                 if (r.toLowerCase() == "y") {
+                    fs.mkdirSync(`./config`);
+                    conf.file({
+                        file: path.join(
+                            __dirname,
+                            "../",
+                            "config",
+                            "config.json"
+                        ),
+                    });
                     ask("ta-api-key");
                     return;
                 } else if (r.toLowerCase() == "n") {
@@ -79,7 +92,7 @@ function ask(type) {
         );
     }
     if (type == "ta-api-key") {
-        rl.question("Enter a TheAltening API Key => ", r => {
+        rl.question("Enter a TheAltening API Key => ", (r) => {
             if (r.includes("api-")) {
                 conf.set("ta-api-key", r);
                 conf.save();
@@ -93,12 +106,12 @@ function ask(type) {
         });
     }
     if (type == "hypixel-api-key") {
-        rl.question("Enter a Hypixel API Key => ", r => {
+        rl.question("Enter a Hypixel API Key => ", (r) => {
             conf.set("hypixel-api-key", r);
             conf.save();
             console.clear();
             log(primary("Successfully set your Hypixel API Key"));
-            return execute();
+            start();
         });
     }
 }
@@ -112,7 +125,7 @@ require("./discordRPC").start();
 global.commandsCollection = new Map();
 const commands = fs
     .readdirSync(path.join(__dirname, "modules"))
-    .filter(r => r.endsWith(".js"));
+    .filter((r) => r.endsWith(".js"));
 for (const command of commands) {
     const x = require(path.join(__dirname, "modules", command));
     commandsCollection.set(x.name, x);
@@ -121,7 +134,7 @@ for (const command of commands) {
 // this handles all the command execution
 
 function execute() {
-    rl.question("=> ", r => {
+    rl.question("=> ", (r) => {
         const args = r.split(" ");
         const cmd = args.shift();
         if (!cmd) {

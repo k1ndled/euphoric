@@ -4,7 +4,7 @@ module.exports = {
     usage: "[hypixel=true / info=true]",
     execute(args) {
         let settings = {};
-        args.forEach(arg => {
+        args.forEach((arg) => {
             if (arg == "hypixel=true") {
                 settings.hypixel = true;
             }
@@ -26,34 +26,46 @@ module.exports = {
                 );
             }
             if (settings.info == true) {
-                log(
-                    primary(
-                        `\naccount generated\nign: ${res.username}\nskin: ${skin}`
-                    )
-                );
-                if (res.info) {
-                    for (const item in res.info) {
-                        log(chalk.hex("#9bb6e0")(`[!] ${item}`));
+                utils.getAccount(res.token).then((acc) => {
+                    if (acc.success == true) {
+                        log(
+                            primary(
+                                `\naccount generated\nign: ${acc.username}\nskin: ${skin}`
+                            )
+                        );
+                        addAccount(res.token, res.username);
+                        log(
+                            primary(
+                                conf.get("copyToken")
+                                    ? "(token copied to clipboard)"
+                                    : ""
+                            )
+                        );
+                        if (res.info) {
+                            for (const item in res.info) {
+                                log(chalk.hex("#9bb6e0")(`[!] ${item}`));
+                            }
+                        }
                     }
-                }
-                addAccount(res.token, res.username);
-                log(
-                    primary(
-                        conf.get("copyToken")
-                            ? "(token copied to clipboard)"
-                            : ""
-                    )
-                );
+                });
             } else {
-                log(primary(`\naccount generated \nign: ${res.username}`));
-                log(
-                    primary(
-                        conf.get("copyToken")
-                            ? "(token copied to clipboard)"
-                            : `\ntoken: ${res.token}`
-                    )
-                );
-                addAccount(res.token, res.username);
+                utils.getAccount(res.token).then((acc) => {
+                    if (acc.success == true) {
+                        log(
+                            primary(
+                                `\naccount generated \nign: ${acc.username}`
+                            )
+                        );
+                        log(
+                            primary(
+                                conf.get("copyToken")
+                                    ? "(token copied to clipboard)"
+                                    : `\ntoken: ${res.token}`
+                            )
+                        );
+                        addAccount(res.token, res.username);
+                    }
+                });
             }
         })();
         function addAccount(token, ign) {

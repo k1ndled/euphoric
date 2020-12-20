@@ -1,17 +1,33 @@
 module.exports = {
-    getUsername(token) {
-        log(
-            "// TODO: Login with Mineflayer to get the uncensored username and get Hypixel stats."
-        );
-        const mineflayer = require("mineflayer");
-        var username = token;
-        var options = {
-            host: "hub.mcs.gg",
-            port: "25565",
-            username: username,
-            password: "f",
-            version: "1.8.9",
-        };
+    getAccount(token) {
+        return new Promise((resolve, reject) => {
+            const ygg = require("yggdrasil")({
+                host: "http://authserver.thealtening.com",
+            });
+            ygg.auth(
+                {
+                    user: token,
+                    pass: "anything",
+                    requestUser: true,
+                },
+                function (err, data) {
+                    if (err) {
+                        console.error(`${err}`);
+                        resolve({
+                            success: false,
+                            error: err,
+                        });
+                    } else if (data) {
+                        resolve({
+                            success: true,
+                            accessToken: data.accessToken,
+                            username: data.selectedProfile.name,
+                            uuid: data.selectedProfile.id,
+                        });
+                    }
+                }
+            );
+        });
     },
     debugMsg(msg) {
         log(chalk.hex("#ebd742")("[DEBUG] - ") + msg);
