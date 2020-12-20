@@ -90,7 +90,7 @@ module.exports = {
                                     } else {
                                         log(
                                             chalk.hex("#ed0707")(
-                                                `there was an error fetching the minecon cape api`
+                                                `there was an error fetching the minecon cape api\n${r}`
                                             )
                                         );
                                     }

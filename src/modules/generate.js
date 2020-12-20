@@ -24,7 +24,7 @@ module.exports = {
             if (res.limit == true) {
                 log(
                     chalk.hex("#fcc221")(
-                        "(api limit reached :: you will no longer get unique accounts until the timer is reset)"
+                        "(api limit reached :: you will no longer get unique accounts until the timer resets @ 7 PM EST)"
                     )
                 );
             }
@@ -70,13 +70,10 @@ module.exports = {
                                     : `\ntoken: ${res.token}`
                             )
                         );
-                        addAccount(res.token, res.username);
+                        utils.addAccount(acc.username, res.token);
                     }
                 });
             }
         })();
-        function addAccount(token, ign) {
-            return log("// TODO: add to account history");
-        }
     },
 };

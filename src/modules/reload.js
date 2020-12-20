@@ -17,7 +17,7 @@ module.exports = {
             }
             if (!command)
                 return log(
-                    `There is no command with name or alias \`${commandName}\!`
+                    `There is no command with the name \`${commandName}\!`
                 );
             delete require.cache[require.resolve(`./${command.name}.js`)];
             try {

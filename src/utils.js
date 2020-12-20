@@ -32,6 +32,27 @@ module.exports = {
     debugMsg(msg) {
         log(chalk.hex("#ebd742")("[DEBUG] - ") + msg);
     },
+    addAccount(ign, token) {
+        log(primary(`saved ${ign} to the account history`));
+        // set file to acc cache
+        conf.file({
+            file: path.join(__dirname, "..", "config", "accountCache.json"),
+        });
+        // set values
+        conf.set(`accounts:${token}:token`, token);
+        conf.set(`accounts:${token}:ign`, ign);
+        // save the values
+        conf.save();
+        // set the file back to the config.
+        conf.file({
+            file: path.join(__dirname, "..", "config", "config.json"),
+        });
+        delete global.accCache;
+        let cache = fs.readFileSync(
+            path.join(__dirname, "..", "config", "accountCache.json")
+        );
+        global.accCache = JSON.parse(cache.toString());
+    },
     async ignToUUID(ign) {
         const res = await fetch(
             `https://api.mojang.com/users/profiles/minecraft/${ign}`

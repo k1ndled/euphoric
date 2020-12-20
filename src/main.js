@@ -55,6 +55,16 @@ function start() {
     if (conf.get("hypixel-api-key")) {
         global.hypixel = new Hypixel.Client(conf.get("hypixel-api-key"));
     }
+    if (
+        fs.existsSync(path.join(__dirname, "..", "config", "accountCache.json"))
+    ) {
+        global.accCache = require(path.join(
+            __dirname,
+            "..",
+            "config",
+            "accountCache.json"
+        ));
+    }
 }
 
 if (!fs.existsSync("./config/config.json")) {
