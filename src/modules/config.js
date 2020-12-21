@@ -38,6 +38,28 @@ module.exports = {
                     break;
                 }
                 break;
+            case "maxpagelength":
+            case "max-page-length":
+            case "maxpages":
+                function isNumeric(str) {
+                    if (typeof str != "string") return false; // we only process strings!
+                    return (
+                        !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+                        !isNaN(parseFloat(str))
+                    ); // ...and ensure strings of whitespace fail
+                }
+                if (isNumeric(args[1])) {
+                    if (args[1] < 1) {
+                        return log("Invalid number");
+                    }
+                    conf.set("max-page-length", args[1]);
+                    log(primary(`Set the max page length to ${args[1]}`));
+                    break;
+                } else {
+                    log(primary(`${args[1]} is an invalid number`));
+                    break;
+                }
+                break;
             case "discord-rpc":
             case "rpc":
                 if (conf.get("discord-rpc") == true) {
@@ -62,7 +84,7 @@ module.exports = {
             default:
                 log(
                     primary(
-                        "Avalible configuration options: hypixel-key, thealtening-key, copy-token, discord-rpc"
+                        "Avalible configuration options: hypixel-key, thealtening-key, copy-token, discord-rpc, max-page-length"
                     )
                 );
                 break;

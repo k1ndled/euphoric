@@ -39,6 +39,7 @@
         "mineflayer": "^2.37.1",
         "nconf": "^0.11.0",
         "node-fetch": "^2.6.1",
+        "paginatejson": "^1.0.3",
         "thealtening-js": "^1.1.0",
         "yggdrasil": "1.4.0"
     }

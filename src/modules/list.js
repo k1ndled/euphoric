@@ -30,13 +30,36 @@ module.exports = {
                 break;
             case "generated":
             case "history":
-                let accounts = 0;
-                for (let acc of Object.keys(accCache.accounts)) {
-                    var account = accCache.accounts[acc];
-                    accounts++;
-                    log(primary(`${account.token} [${account.ign}]`));
+                const paginate = require("paginatejson");
+                if (args[1] < 1) {
+                    log(primary(`${args[1]} is an invalid page.`));
+                    return;
                 }
-                log(primary(`(${accounts} accounts)`));
+                // Credits: https://stackoverflow.com/questions/14528385/how-to-convert-json-object-to-javascript-array
+                function json2array(json) {
+                    var result = [];
+                    var keys = Object.keys(json);
+                    keys.forEach(function (key) {
+                        result.push(json[key]);
+                    });
+                    return result;
+                }
+                let arr = json2array(accCache.accounts);
+                let result = paginate.paginate(
+                    arr,
+                    args[1] ? args[1] : 1,
+                    conf.get("max-page-length")
+                        ? conf.get("max-page-length")
+                        : 5
+                );
+                if (args[1] > result.last) {
+                    log(primary(`${args[1]} is an invalid page.`));
+                    return;
+                }
+                result.items.forEach((item) => {
+                    log(primary(`[+] ${item.token} (${item.ign})`));
+                });
+                log(primary(`viewing page ${result.current}/${result.last}`));
                 break;
             default:
                 return log(
