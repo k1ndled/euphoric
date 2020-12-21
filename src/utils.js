@@ -63,13 +63,15 @@ module.exports = {
         const res = await fetch(`https://crafatar.com/capes/${uuid}`);
         if (res.status == 404) {
             return { success: false, error: "No Mincon cape" };
-        } else if (res.status == 304 || res.status == 200) {
+        } else if(res.status == 500){
+			return { success: false, error: "HTTP ERROR 500" };
+		}else if (res.status == 304 || res.status == 200) {
             return {
                 success: true,
                 cape: `https://crafatar.com/capes/${uuid}`,
             };
         } else {
-            return res;
+            return res.status;
         }
     },
 };

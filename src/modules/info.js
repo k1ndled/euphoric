@@ -19,13 +19,17 @@ module.exports = {
         let settings = {};
         // if there's a token in the args, get ign from token
         if (args[0]) {
+			log("test0")
             if (args[0].includes("@")) {
                 utils.getAccount(args[0]).then((acc) => {
                     if (acc.success == true) {
-                        ign = acc.username;
-                    }
+						ign = acc.username;
+                    } else{
+						log(acc.error);
+					}
                 });
             } else {
+				log("test5")
                 ign = args[0];
             }
         } else {
@@ -90,7 +94,7 @@ module.exports = {
                                     } else {
                                         log(
                                             chalk.hex("#ed0707")(
-                                                `there was an error fetching the minecon cape api\n${r}`
+                                                `there was an error fetching the minecon cape api\n${r.error}`
                                             )
                                         );
                                     }
@@ -108,132 +112,142 @@ module.exports = {
         }
 
         function printHypixelStats() {
-            if (!ign) return log(`${ign} no ign was set for some reason..`);
-            hypixel
-                .getPlayer(ign)
-                .then((player) => {
-                    let swWinstreak;
-                    let bwWinstreak;
-                    let sw = player.stats.skywars;
-                    let bw = player.stats.bedwars;
-                    let duels = player.stats.duels;
+			if(!ign){
+				if (args[0].includes("@")) {
+					utils.getAccount(args[0]).then((acc) => {
+						if (acc.success == true) {
+							ign = acc.username;
+							hypixel
+							.getPlayer(ign)
+							.then((player) => {
+								let swWinstreak;
+								let bwWinstreak;
+								let sw = player.stats.skywars;
+								let bw = player.stats.bedwars;
+								let duels = player.stats.duels;
 
-                    // general hypixel stats
+								// general hypixel stats
 
-                    log(
-                        primary(
-                            `hypixel info:: \n[${player.rank}] ${player.nickname}`
-                        )
-                    );
-                    log(primary(`network level:: ${player.level}`));
-                    log(
-                        primary(`is online:: ${player.isOnline ? "yes" : "no"}`)
-                    );
-                    log(primary(`last online:: ${player.lastLogout}`));
-                    log("\n");
+								log(
+									primary(
+										`hypixel info:: \n[${player.rank}] ${player.nickname}`
+									)
+								);
+								log(primary(`network level:: ${player.level}`));
+								log(
+									primary(`is online:: ${player.isOnline ? "yes" : "no"}`)
+								);
+								log(primary(`last online:: ${player.lastLogout}`));
+								log("\n");
 
-                    // minigame stats
+								// minigame stats
 
-                    log(primary(`:: game stats ::`));
+								log(primary(`:: game stats ::`));
 
-                    // skywars stats
-                    if (sw) {
-                        log(primary(`sw level:: ${sw.levelFormatted}`));
-                        log(primary(`sw coins:: ${sw.coins.toLocaleString()}`));
-                        if (sw.winstreak == 0) {
-                            swWinstreak = "none";
-                        } else {
-                            swWinstreak = sw.winstreak;
-                        }
-                        log(primary(`sw winstreak:: ${swWinstreak}`));
-                        log(
-                            primary(`sw kils:: ${sw.kills.toLocaleString()}\n`)
-                        );
-                    }
+								// skywars stats
+								if (sw) {
+									log(primary(`sw level:: ${sw.levelFormatted}`));
+									log(primary(`sw coins:: ${sw.coins.toLocaleString()}`));
+									if (sw.winstreak == 0) {
+										swWinstreak = "none";
+									} else {
+										swWinstreak = sw.winstreak;
+									}
+									log(primary(`sw winstreak:: ${swWinstreak}`));
+									log(
+										primary(`sw kils:: ${sw.kills.toLocaleString()}\n`)
+									);
+								}
 
-                    // bedwars stats
+								// bedwars stats
 
-                    if (bw) {
-                        log(primary(`bw level:: ${bw.level}`));
-                        log(primary(`bw coins:: ${bw.coins.toLocaleString()}`));
-                        if (bw.winstreak == 0) {
-                            bwWinstreak = "none";
-                        } else {
-                            bwWinstreak = bw.winstreak;
-                        }
-                        log(primary(`bw wins:: ${bw.wins}`));
-                        log(primary(`bw winstreak:: ${bwWinstreak}`));
-                        log(primary(`bw kils:: ${bw.kills.toLocaleString()}`));
-                        log(
-                            primary(
-                                `bw finals:: ${bw.finalKills.toLocaleString()}`
-                            )
-                        );
-                        log(
-                            primary(
-                                `broke ${bw.beds.broken.toLocaleString()} beds\n`
-                            )
-                        );
-                    }
-                    // duels stats
-                    if (duels) {
-                        log(
-                            primary(
-                                `duels coins:: ${duels.coins.toLocaleString()}`
-                            )
-                        );
-                        log(
-                            primary(
-                                `duels kills:: ${duels.kills.toLocaleString()}`
-                            )
-                        );
-                        log(
-                            primary(
-                                `duels wins:: ${duels.wins.toLocaleString()}\n`
-                            )
-                        );
-                    }
+								if (bw) {
+									log(primary(`bw level:: ${bw.level}`));
+									log(primary(`bw coins:: ${bw.coins.toLocaleString()}`));
+									if (bw.winstreak == 0) {
+										bwWinstreak = "none";
+									} else {
+										bwWinstreak = bw.winstreak;
+									}
+									log(primary(`bw wins:: ${bw.wins}`));
+									log(primary(`bw winstreak:: ${bwWinstreak}`));
+									log(primary(`bw kils:: ${bw.kills.toLocaleString()}`));
+									log(
+										primary(
+											`bw finals:: ${bw.finalKills.toLocaleString()}`
+										)
+									);
+									log(
+										primary(
+											`broke ${bw.beds.broken.toLocaleString()} beds\n`
+										)
+									);
+								}
+								// duels stats
+								if (duels) {
+									log(
+										primary(
+											`duels coins:: ${duels.coins.toLocaleString()}`
+										)
+									);
+									log(
+										primary(
+											`duels kills:: ${duels.kills.toLocaleString()}`
+										)
+									);
+									log(
+										primary(
+											`duels wins:: ${duels.wins.toLocaleString()}\n`
+										)
+									);
+								}
 
-                    fetch(
-                        `https://api.hypixel.net/Skyblock/profiles?key=${conf.get(
-                            "hypixel-api-key"
-                        )}&uuid=${player.uuid}`
-                    )
-                        .then((res) => res.json())
-                        .then((json) => {
-                            if (json.success == true) {
-                                if (json.profiles) {
-                                    log(primary(`skyblock coins::`));
-                                    json.profiles.forEach((profile) => {
-                                        if (profile.banking) {
-                                            log(
-                                                primary(
-                                                    `[${
-                                                        profile.cute_name
-                                                    }] ${profile.banking.balance.toLocaleString()} coins in the bank, with ${profile.members[
-                                                        player.uuid
-                                                    ].coin_purse.toLocaleString()} coins in their purse`
-                                                )
-                                            );
-                                        }
-                                    });
-                                }
-                            } else {
-                                log(
-                                    chalk.hex("#ed0707")(
-                                        `there was an error fetching skyblock coins`
-                                    )
-                                );
-                                return;
-                            }
-                        })
-                        .catch((error) => {
-                            log(chalk.hex("#ed0707")(`error:\n${error}`));
-                        });
-                })
-                .catch((e) => {
-                    log(e);
-                });
+								fetch(
+									`https://api.hypixel.net/Skyblock/profiles?key=${conf.get(
+										"hypixel-api-key"
+									)}&uuid=${player.uuid}`
+								)
+									.then((res) => res.json())
+									.then((json) => {
+										if (json.success == true) {
+											if (json.profiles) {
+												log(primary(`skyblock coins::`));
+												json.profiles.forEach((profile) => {
+													if (profile.banking) {
+														log(
+															primary(
+																`[${
+																	profile.cute_name
+																}] ${profile.banking.balance.toLocaleString()} coins in the bank, with ${profile.members[
+																	player.uuid
+																].coin_purse.toLocaleString()} coins in their purse`
+															)
+														);
+													}
+												});
+											}
+										} else {
+											log(
+												chalk.hex("#ed0707")(
+													`there was an error fetching skyblock coins`
+												)
+											);
+											return;
+										}
+									})
+									.catch((error) => {
+										log(chalk.hex("#ed0707")(`error:\n${error}`));
+									});
+							})
+							.catch((e) => {
+								log(e);
+							});
+						} else{
+							log(acc.error);
+						}
+					});
+				}
+			}
         }
     },
 };
