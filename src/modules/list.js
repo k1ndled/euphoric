@@ -31,6 +31,12 @@ module.exports = {
             case "generated":
             case "history":
                 const paginate = require("paginatejson");
+                let page;
+                if (!args[1]) {
+                    page = 1;
+                } else {
+                    page = args[1];
+                }
                 if (args[1] < 1) {
                     log(primary(`${args[1]} is an invalid page.`));
                     return;
@@ -47,7 +53,7 @@ module.exports = {
                 let arr = json2array(accCache.accounts);
                 let result = paginate.paginate(
                     arr,
-                    args[1] ? args[1] : 1,
+                    page,
                     conf.get("max-page-length")
                         ? conf.get("max-page-length")
                         : 5
