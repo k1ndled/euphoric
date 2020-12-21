@@ -30,6 +30,9 @@ module.exports = {
                 break;
             case "generated":
             case "history":
+				if( typeof accCache === 'undefined' || accCache === null ){
+					return log(primary("no account cache :c\ngo generate some accounts!"));
+				}
                 const paginate = require("paginatejson");
                 let page;
                 if (!args[1]) {
