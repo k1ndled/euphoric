@@ -10,9 +10,9 @@ module.exports = {
             );
         }
         (async () => {
-            const res = await ta.private(args[0]);
+			const res = await ta.private(args[0]);
             if (res.success == true) {
-                utils.getAccount(res.token).then((acc) => {
+                utils.getAccount(args[0]).then((acc) => {
                     if (acc.success == true) {
                         log(primary(`successfully privated ${acc.username}`));
                     }
