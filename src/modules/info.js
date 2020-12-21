@@ -19,7 +19,6 @@ module.exports = {
         let settings = {};
         // if there's a token in the args, get ign from token
         if (args[0]) {
-			log("test0")
             if (args[0].includes("@")) {
                 utils.getAccount(args[0]).then((acc) => {
                     if (acc.success == true) {
@@ -29,7 +28,6 @@ module.exports = {
 					}
                 });
             } else {
-				log("test5")
                 ign = args[0];
             }
         } else {
