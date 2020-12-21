@@ -1,3 +1,10 @@
+/*/
+Euphoric :: DiscordRPC.js
+
+This file handles the Discord RPC, checks if it's running, starts it, with the ability to stop it aswell.
+
+/*/
+
 const exec = require("child_process").exec;
 let isRPCStarted;
 let loop;

@@ -1,3 +1,10 @@
+/*/
+Euphoric :: Main.js
+
+This is the main file for Euphoric, it handles the setup, sets variables, and handles all of the commands.
+
+/*/
+
 // imports
 global.path = require("path");
 global.fs = require("fs");

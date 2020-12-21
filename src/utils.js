@@ -1,3 +1,10 @@
+/*/
+Euphoric :: Utils.js
+
+This is the utilites for Euphoric, common functions I use often, or just functions to make Euphoric simplier and cleaner.
+
+/*/
+
 module.exports = {
     getAccount(token) {
         return new Promise((resolve, reject) => {
