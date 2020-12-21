@@ -47,7 +47,8 @@ module.exports = {
         });
         // set values
         conf.set(`accounts:${token}:token`, token);
-        conf.set(`accounts:${token}:ign`, ign);
+		conf.set(`accounts:${token}:ign`, ign);
+		conf.set(`accounts:${token}:timeGenerated`, Date.now());
         // save the values
         conf.save();
         // set the file back to the config.

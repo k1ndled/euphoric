@@ -61,7 +61,8 @@ module.exports = {
         // functions below
 
         function printGeneral(singular) {
-            log(primary(`\ngeneral info | ${ign}\n`));
+			log(primary(`\ngeneral info | ${ign}\n`));
+			const { lookupUUID } = require("namemc");
             utils.ignToUUID(ign).then((id) => {
                 log(primary(`uuid:: ${id.id}`));
                 let nameChanges = 0;
@@ -83,7 +84,17 @@ module.exports = {
                                     log(primary("optifine cape:: no"));
                                 } else {
                                     log(primary("optifine cape:: yes"));
-                                }
+								}
+								(async () => {
+									const user = await lookupUUID(id.id);
+									let skinCount = 0;
+									if(user.imageUrls.skins){
+										user.imageUrls.skins.forEach(skin => {
+											skinCount++;
+										});
+										log(primary(`skins:: ${skinCount}`));
+									}
+								})();
                                 utils.checkMineconCape(id.id).then((r) => {
                                     if (r.success == true) {
                                         log(primary("minecon cape:: yes"));

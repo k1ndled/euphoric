@@ -64,14 +64,63 @@ module.exports = {
                 if (args[1] > result.last) {
                     log(primary(`${args[1]} is an invalid page.`));
                     return;
-                }
-                result.items.forEach((item) => {
-                    log(primary(`[+] ${item.token} (${item.ign})`));
-				});
+				}
+				const pms = require("pretty-ms");
+				async function getDate(token){
+					let info = await ta.altInfo(token);
+					return new Promise((resolve, reject) => {
+						resolve({
+							expiration: info.expires
+						});
+					});
+				}
+				if(conf.get('history-type') == "large"){
+					result.items.forEach((item) => {
+						getDate(item.token).then(date =>{
+							var parsedDate = new Date(date.expiration);
+							var milliseconds = parsedDate.getTime();
+							let expiry = pms(milliseconds - Date.now());
+							expiry = expiry.split("d");
+							log(primary(`[+] ${item.token} - (${item.ign}) ${`expires in ${expiry[0]} days`} [generated ${pms(Date.now() - item.timeGenerated, {compact: true})} ago]`));
+						})
+					});
+				}
+				else if(!conf.get(`history-type`)){
+					result.items.forEach((item) => {
+						getDate(item.token).then(date =>{
+							var parsedDate = new Date(date.expiration);
+							var milliseconds = parsedDate.getTime();
+							let expiry = pms(milliseconds - Date.now());
+							expiry = expiry.split("d");
+							if(expiry[0].includes("-")){
+								log(primary(`[+] ${item.token} - expired`));
+							} else{
+								log(primary(`[+] ${item.token} - valid`));
+							}
+						})
+					});
+				} else if(conf.get(`history-type`) == "compact"){
+					result.items.forEach((item) => {
+						getDate(item.token).then(date =>{
+							var parsedDate = new Date(date.expiration);
+							var milliseconds = parsedDate.getTime();
+							let expiry = pms(milliseconds - Date.now());
+							expiry = expiry.split("d");
+							if(expiry[0].includes("-")){
+								log(primary(`[+] ${item.token} - expired`));
+							} else{
+								log(primary(`[+] ${item.token} - valid`));
+							}
+						})
+					});
+				}
 				if(result.current && result.last){
 					log(primary(`viewing page ${result.current}/${result.last}`));
 				} else{
 					log(primary(`viewing page 1/1`));
+				}
+				if(!conf.get(`history-type`)){
+					log(primary("(you can show more in the history by using 'config')"))
 				}
                 break;
             default:
