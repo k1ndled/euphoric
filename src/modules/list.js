@@ -115,9 +115,9 @@ module.exports = {
 					});
 				}
 				if(result.current && result.last){
-					log(primary(`viewing page ${result.current}/${result.last}`));
+					log(primary(`viewing page ${result.current}/${result.last} (${arr.length} accounts were found)`));
 				} else{
-					log(primary(`viewing page 1/1`));
+					log(primary(`viewing page 1/1 (${arr.length} accounts were found)`));
 				}
 				if(!conf.get(`history-type`)){
 					log(primary("(you can show more in the history by using 'config')"))
