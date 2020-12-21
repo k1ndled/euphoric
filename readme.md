@@ -39,6 +39,13 @@ $ favorite <token>
 $ private <token>
 ```
 
+
+##### View account generation history (Lists all the accounts you've generated with Euphoric, bypassing TheAltenings history limit.)
+
+```sh
+$ list history [page]
+```
+
 ##### View more commands with
 
 ```sh
