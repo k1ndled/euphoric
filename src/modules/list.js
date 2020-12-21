@@ -67,8 +67,12 @@ module.exports = {
                 }
                 result.items.forEach((item) => {
                     log(primary(`[+] ${item.token} (${item.ign})`));
-                });
-                log(primary(`viewing page ${result.current}/${result.last}`));
+				});
+				if(result.current && result.last){
+					log(primary(`viewing page ${result.current}/${result.last}`));
+				} else{
+					log(primary(`viewing page 1/1`));
+				}
                 break;
             default:
                 return log(
