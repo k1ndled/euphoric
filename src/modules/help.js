@@ -3,7 +3,7 @@ module.exports = {
     description: "Shows the help",
     execute(args) {
         log(primary(`${package.name} (v${package.version}) :: help`));
-        commandsCollection.forEach((r) => {
+        commandsCollection.forEach(r => {
             let aliases;
             if (r.aliases) {
                 aliases = r.aliases.join(", ");

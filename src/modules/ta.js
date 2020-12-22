@@ -4,11 +4,11 @@ module.exports = {
     aliases: ["thealtening"],
     execute(args) {
         (async () => {
-			const pms = require("pretty-ms");
-			const res = await ta.license();
-			var parsedDate = new Date(res.expires);
-			var milliseconds = parsedDate.getTime();
-			let expiry = pms(milliseconds - Date.now());
+            const pms = require("pretty-ms");
+            const res = await ta.license();
+            var parsedDate = new Date(res.expires);
+            var milliseconds = parsedDate.getTime();
+            let expiry = pms(milliseconds - Date.now());
 
             log(
                 primary(

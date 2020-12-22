@@ -8,11 +8,11 @@ module.exports = {
             return log(
                 chalk.hex("#ed0707")(`usage: ${this.name} ${this.usage}`)
             );
-		}
+        }
         (async () => {
-			const res = await ta.favorite(args[0]);
+            const res = await ta.favorite(args[0]);
             if (res.success == true) {
-                utils.getAccount(args[0]).then((acc) => {
+                utils.getAccount(args[0]).then(acc => {
                     if (acc.success == true) {
                         log(primary(`successfully favorited ${acc.username}`));
                     }

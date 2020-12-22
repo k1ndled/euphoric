@@ -84,32 +84,24 @@ if (!fs.existsSync("./config/config.json")) {
 
 function ask(type) {
     if (type == "setup") {
-        rl.question(
-            "It appears you have not used this application before. Would you like to start the setup? (y/n) => ",
-            (r) => {
-                if (r.toLowerCase() == "y") {
-                    fs.mkdirSync(`./config`);
-                    conf.file({
-                        file: path.join(
-                            __dirname,
-                            "../",
-                            "config",
-                            "config.json"
-                        ),
-                    });
-                    ask("ta-api-key");
-                    return;
-                } else if (r.toLowerCase() == "n") {
-                    process.exit(1);
-                } else {
-                    log(chalk.hex("#fc3200")(`Invalid option, closing.`));
-                    process.exit(1);
-                }
+        rl.question("Would you like to setup Euphoric? (y/n) => ", r => {
+            if (r.toLowerCase() == "y") {
+                fs.mkdirSync(`./config`);
+                conf.file({
+                    file: path.join(__dirname, "../", "config", "config.json"),
+                });
+                ask("ta-api-key");
+                return;
+            } else if (r.toLowerCase() == "n") {
+                process.exit(1);
+            } else {
+                log(chalk.hex("#fc3200")(`Invalid option, closing.`));
+                process.exit(1);
             }
-        );
+        });
     }
     if (type == "ta-api-key") {
-        rl.question("Enter a TheAltening API Key => ", (r) => {
+        rl.question("Enter a TheAltening API Key => ", r => {
             if (r.includes("api-")) {
                 conf.set("ta-api-key", r);
                 conf.save();
@@ -123,7 +115,7 @@ function ask(type) {
         });
     }
     if (type == "hypixel-api-key") {
-        rl.question("Enter a Hypixel API Key => ", (r) => {
+        rl.question("Enter a Hypixel API Key => ", r => {
             conf.set("hypixel-api-key", r);
             // auto-set copyToken
             conf.set("copyToken", true);
@@ -150,13 +142,13 @@ counter.aliases = 0;
 
 const commands = fs
     .readdirSync(path.join(__dirname, "modules"))
-    .filter((r) => r.endsWith(".js"));
+    .filter(r => r.endsWith(".js"));
 for (const command of commands) {
     const x = require(path.join(__dirname, "modules", command));
     commandsCollection.set(x.name, x);
     counter.commands = counter.commands + 1;
     if (x.aliases) {
-        x.aliases.forEach((alias) => {
+        x.aliases.forEach(alias => {
             aliasesCollection.set(alias, x);
             counter.aliases = counter.aliases + 1;
         });
@@ -166,7 +158,7 @@ for (const command of commands) {
 // this handles all the command execution
 
 function execute() {
-    rl.question("=> ", (r) => {
+    rl.question("=> ", r => {
         const args = r.split(" ");
         const cmd = args.shift();
         if (!cmd) {

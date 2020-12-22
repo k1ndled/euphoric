@@ -1,7 +1,7 @@
 module.exports = {
     name: "random",
     description: "Randomly chooses a token",
-    usage: "<favorite/private>",
+    usage: "<favorite/private/generated>",
     aliases: ["rnd"],
     execute(args) {
         if (!args[0]) {
@@ -17,7 +17,7 @@ module.exports = {
                     var acc = res[Math.floor(Math.random() * res.length)];
                     if (conf.get("copyToken") == true) {
                         clipboardy.writeSync(acc.token);
-                        utils.getAccount(acc.token).then((account) => {
+                        utils.getAccount(acc.token).then(account => {
                             if (account.success == true) {
                                 log(
                                     primary(
@@ -27,7 +27,7 @@ module.exports = {
                             }
                         });
                     } else {
-                        utils.getAccount(acc.token).then((account) => {
+                        utils.getAccount(acc.token).then(account => {
                             if (account.success == true) {
                                 log(
                                     primary(
@@ -44,7 +44,7 @@ module.exports = {
                     const res = await ta.privates();
                     var acc = res[Math.floor(Math.random() * res.length)];
                     if (conf.get("copyToken") == true) {
-                        utils.getAccount(acc.token).then((account) => {
+                        utils.getAccount(acc.token).then(account => {
                             if (account.success == true) {
                                 log(
                                     primary(
@@ -59,7 +59,7 @@ module.exports = {
                         });
                         clipboardy.writeSync(acc.token);
                     } else {
-                        utils.getAccount(acc.token).then((account) => {
+                        utils.getAccount(acc.token).then(account => {
                             if (account.success == true) {
                                 log(
                                     primary(
@@ -75,6 +75,35 @@ module.exports = {
                     }
                 })();
                 break;
+            case "generated":
+                if (typeof accCache === "undefined" || accCache === null) {
+                    return log(
+                        primary(
+                            "no account cache :c\ngo generate some accounts!"
+                        )
+                    );
+                }
+                // Credit => https://stackoverflow.com/questions/14528385/how-to-convert-json-object-to-javascript-array
+                function json2array(json) {
+                    var result = [];
+                    var keys = Object.keys(json);
+                    keys.forEach(function(key) {
+                        result.push(json[key]);
+                    });
+                    return result;
+                }
+                let arr = json2array(accCache.accounts);
+                var acc = arr[Math.floor(Math.random() * arr.length)];
+                utils.getAccount(acc.token).then(account => {
+                    if (account.success == true) {
+                        log(primary(`randomly chose ${account.username}`));
+                    }
+                });
+                break;
+            default:
+                return log(
+                    chalk.hex("#ed0707")(`usage: ${this.name} ${this.usage}`)
+                );
         }
     },
 };

@@ -17,7 +17,7 @@ module.exports = {
                     pass: "anything",
                     requestUser: true,
                 },
-                function (err, data) {
+                function(err, data) {
                     if (err) {
                         console.error(`${err}`);
                         resolve({
@@ -47,8 +47,8 @@ module.exports = {
         });
         // set values
         conf.set(`accounts:${token}:token`, token);
-		conf.set(`accounts:${token}:ign`, ign);
-		conf.set(`accounts:${token}:timeGenerated`, Date.now());
+        conf.set(`accounts:${token}:ign`, ign);
+        conf.set(`accounts:${token}:timeGenerated`, Date.now());
         // save the values
         conf.save();
         // set the file back to the config.
@@ -71,9 +71,9 @@ module.exports = {
         const res = await fetch(`https://crafatar.com/capes/${uuid}`);
         if (res.status == 404) {
             return { success: false, error: "No Mincon cape" };
-        } else if(res.status == 500){
-			return { success: false, error: "HTTP ERROR 500" };
-		}else if (res.status == 304 || res.status == 200) {
+        } else if (res.status == 500) {
+            return { success: false, error: "HTTP ERROR 500" };
+        } else if (res.status == 304 || res.status == 200) {
             return {
                 success: true,
                 cape: `https://crafatar.com/capes/${uuid}`,

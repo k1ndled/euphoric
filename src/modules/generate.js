@@ -7,7 +7,7 @@ module.exports = {
         let started = Date.now();
         log(primary("generating account..."));
         let settings = {};
-        args.forEach((arg) => {
+        args.forEach(arg => {
             if (arg == "hypixel=true") {
                 settings.hypixel = true;
             }
@@ -29,13 +29,14 @@ module.exports = {
                 );
             }
             if (settings.info == true) {
-                utils.getAccount(res.token).then((acc) => {
+                utils.getAccount(res.token).then(acc => {
                     if (acc.success == true) {
                         log(
                             primary(
-                                `\naccount generated in ${
-                                    Date.now() - started
-                                }ms\nign: ${acc.username}\nskin: ${skin}`
+                                `\naccount generated in ${Date.now() -
+                                    started}ms\nign: ${
+                                    acc.username
+                                }\nskin: ${skin}`
                             )
                         );
                         addAccount(res.token, res.username);
@@ -54,13 +55,12 @@ module.exports = {
                     }
                 });
             } else {
-                utils.getAccount(res.token).then((acc) => {
+                utils.getAccount(res.token).then(acc => {
                     if (acc.success == true) {
                         log(
                             primary(
-                                `\naccount generated in ${
-                                    Date.now() - started
-                                }ms \nign: ${acc.username}`
+                                `\naccount generated in ${Date.now() -
+                                    started}ms \nign: ${acc.username}`
                             )
                         );
                         log(
